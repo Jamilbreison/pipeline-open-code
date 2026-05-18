@@ -6,7 +6,7 @@ st.set_page_config(page_title="NLP Pipeline", layout="wide")
 st.title("⚙️ Pipeline de NLP con spaCy")
 
 # IMPORTANTE: Cambia esta URL por la que te dé Render una vez desplegado el backend
-API_URL = "https://pipeline-open-code.onrender.com"
+API_URL = "https://pipeline-open-code.onrender.com/analyze"
 
 texto_input = st.text_area(
     "Ingresa el texto a analizar:",
