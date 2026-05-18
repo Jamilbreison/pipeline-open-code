@@ -39,6 +39,7 @@ if st.button("Ejecutar Pipeline"):
                     st.dataframe(df, use_container_width=True)
                     
             else:
-                st.error("Hubo un error al procesar la solicitud en la API.")
+                st.error(f"Error HTTP: {response.status_code}")
+                st.write("Detalle del error devuelto por la API:", response.text)
         except requests.exceptions.ConnectionError:
             st.error("No se pudo conectar con la API. Verifica que el backend esté corriendo y la URL sea correcta.")
