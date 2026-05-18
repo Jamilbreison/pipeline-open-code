@@ -30,7 +30,6 @@ def generar_reporte_texto(texto_original, data):
     reporte += separador + "\n"
     reporte += f"  Total de tokens: {data['total_tokens']}\n\n"
     
-    # Extraemos solo los textos de los tokens para la lista
     lista_tokens = [item["token"] for item in data["detalles_tokens"]]
     reporte += f"  Tokens: {lista_tokens}\n\n"
 
@@ -100,23 +99,26 @@ if st.button("Ejecutar Pipeline"):
                     st.subheader("Etapa 2: Tokens")
                     st.write(f"**Total de tokens:** {data['total_tokens']}")
                     
+                    # --- AQUÍ ESTÁ EL CAMBIO PARA LA ETAPA 2 ---
+                    # Extraemos la lista de tokens igual que en el reporte
+                    lista_tokens = [item["token"] for item in data["detalles_tokens"]]
+                    # st.code le da un formato de bloque de código muy limpio para las listas
+                    st.code(f"Tokens: {lista_tokens}", language="python")
+                    
                     st.subheader("Etapa 5: Filtrado de Stopwords")
                     st.success(data["texto_limpio"])
                     
                 with col2:
                     st.subheader("Etapas 3 y 4: Lematización y POS")
                     df = pd.DataFrame(data["detalles_tokens"])
-                    # Filtramos las columnas para mostrarlas mejor en la tabla visual
                     st.dataframe(df[["token", "lema", "pos", "tag"]], use_container_width=True)
                 
-                # --- NUEVA SECCIÓN: BOTÓN DE DESCARGA ---
+                # --- BOTÓN DE DESCARGA ---
                 st.markdown("---")
                 st.subheader("📥 Exportar Resultados")
                 
-                # Generamos el texto con el formato solicitado
                 texto_descarga = generar_reporte_texto(texto_input, data)
                 
-                # Botón nativo de descarga de Streamlit
                 st.download_button(
                     label="Descargar Reporte en formato .txt",
                     data=texto_descarga,
